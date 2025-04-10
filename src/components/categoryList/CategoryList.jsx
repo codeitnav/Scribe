@@ -3,8 +3,10 @@ import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
 const getData = async () => {
-  const res = await fetch("http://localhost:3000/api/categories", {
+  const res = await fetch(`${BASE_URL}/api/categories`, {
     cache: "no-store",
   });
 
