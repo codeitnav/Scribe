@@ -31,9 +31,9 @@ const WritePage = () => {
     const upload = () => {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
-
+  
       const uploadTask = uploadBytesResumable(storageRef, file);
-
+  
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -49,7 +49,9 @@ const WritePage = () => {
               break;
           }
         },
-        (error) => {},
+        (error) => {
+          console.error("Upload failed:", error); 
+        },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setMedia(downloadURL);
@@ -57,9 +59,10 @@ const WritePage = () => {
         }
       );
     };
-
+  
     file && upload();
   }, [file]);
+  
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
