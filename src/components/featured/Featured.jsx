@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; 
 import styles from "./featured.module.css";
 import Image from "next/image";
 
@@ -15,7 +15,7 @@ const Featured = () => {
         <div className={styles.textContainer}>
           <h1 className={styles.postTitle}>Words That Inspire. Ideas That Resonate.</h1>
           <p className={styles.postDesc}>
-          Welcome to a space where every post is more than just words—it's a window into fresh perspectives, thought-provoking ideas, and creative sparks. Whether you're here to learn something new, get inspired, or simply enjoy a good read, this blog is your companion on a journey of discovery. Explore stories that stir emotion, insights that ignite thought, and content that fuels your curiosity and passion.
+            Welcome to a space where every post is more than just words&mdash;it&rsquo;s a window into fresh perspectives, thought-provoking ideas, and creative sparks. Whether you&rsquo;re here to learn something new, get inspired, or simply enjoy a good read, this blog is your companion on a journey of discovery. Explore stories that stir emotion, insights that ignite thought, and content that fuels your curiosity and passion.
           </p>
         </div>
       </div>
