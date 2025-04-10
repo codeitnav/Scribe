@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
@@ -13,7 +15,9 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/utils/firebase";
-import ReactQuill from "react-quill";
+import dynamicImport from "next/dynamic";
+
+const ReactQuill = dynamicImport(() => import("react-quill"), { ssr: false });
 
 const WritePage = () => {
   const { status } = useSession();
@@ -31,9 +35,9 @@ const WritePage = () => {
     const upload = () => {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
-  
+
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -50,7 +54,7 @@ const WritePage = () => {
           }
         },
         (error) => {
-          console.error("Upload failed:", error); 
+          console.error("Upload failed:", error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -59,10 +63,9 @@ const WritePage = () => {
         }
       );
     };
-  
+
     file && upload();
   }, [file]);
-  
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
@@ -88,7 +91,7 @@ const WritePage = () => {
         desc: value,
         img: media,
         slug: slugify(title),
-        catSlug: catSlug || "style", //If not selected, choose the general category
+        catSlug: catSlug || "style", // Default to 'style' if none selected
       }),
     });
 
@@ -106,7 +109,10 @@ const WritePage = () => {
         className={styles.input}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
+      <select
+        className={styles.select}
+        onChange={(e) => setCatSlug(e.target.value)}
+      >
         <option value="style">style</option>
         <option value="fashion">fashion</option>
         <option value="food">food</option>
